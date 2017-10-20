@@ -2,14 +2,19 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 # 设置解决方案名称
-project(MEEarth)
+project(MeGISEngine)
 
 # 配置需要的第三方库
-set(ThirdParty_DIR "" CACHE PATH "third party directory")
+set(OSG_DIR "" CACHE PATH "osg directory")
+set(OSGEarth_DIR "" CACHE PATH "osgEarth directory")
 
 # 如果不配置第三方库，则不进行之后的生成
-if(NOT ThirdParty_DIR)
-	message(FATAL_ERROR "ThirdParty_DIR variable is not set appropriate!")
+if(NOT OSG_DIR)
+	message(FATAL_ERROR "请选择osg目录!")
+endif()
+
+if(NOT OSGEarth_DIR)
+	message(FATAL_ERROR "请选择osgEarth目录!")
 endif()
 
 # 判断生成的是32位还是64位
@@ -19,7 +24,7 @@ else(${CMAKE_SIZEOF_VOID_P} MATCHES 8)
 	SET(Platform "win32")
 endif(${CMAKE_SIZEOF_VOID_P} MATCHES 8)
 
-# 设置输出路径，区分不32、64
+# 设置输出路径，不区分不32、64
 set(OUTPUT_BINDIR ${CMAKE_SOURCE_DIR}/bin)
 
 # 设置lib库的输出路径，不区分32、64
@@ -46,17 +51,18 @@ endif()
 
 # 设置第三方头文件与链接库的路径
 include_directories(
-	${ThirdParty_DIR}/include
+	${OSG_DIR}/include
+	${OSGEarth_DIR}/include
 	${CMAKE_BINARY_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 link_directories(
-	${ThirdParty_DIR}/lib
+	${OSG_DIR}/lib
+	${OSGEarth_DIR}/lib
 	${OUTPUT_LIBDIR}
 )
 
 # 添加子项目
 
 add_subdirectory(src)
-add_subdirectory(Example)
