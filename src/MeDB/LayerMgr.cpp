@@ -23,7 +23,7 @@ void LayerMgr::destory()
 }
 
 
-osgEarth::Layer* LayerMgr::addLayer(Geo::Option& option, Driver driver)
+osgEarth::Layer* LayerMgr::addLayer(Geo::Option* option, Driver driver)
 {
 	osgEarth::Layer* layer = nullptr;
 	switch (driver)
@@ -89,9 +89,9 @@ osgEarth::Layer* LayerMgr::addLayer(Geo::Option& option, Driver driver)
 		break;
 	}
 	}
-	if (layer != nullptr)
+	if (layer != nullptr && option != nullptr)
 	{
-		m_listLayer[option.strID] = layer;
+		m_listLayer[option->strID] = layer;
 	}
 	return layer;
 }

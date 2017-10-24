@@ -32,10 +32,11 @@ void OECore::init(osgViewer::Viewer* viewer)
 		if (m_pMapNode != nullptr)
 		{
 			m_pMap = m_pMapNode->getMap();
-			m_pSkyNode = osgEarth::Util::SkyNode::create(m_pMapNode);
-			m_pSkyNode->addChild(m_pMapNode);
-			m_pSkyNode->attach(m_pViewer);
-			m_pSceneData->addChild(m_pSkyNode);
+			m_pMapSRS = m_pMap->getSRS();
+ 			m_pSkyNode = osgEarth::Util::SkyNode::create(m_pMapNode);
+ 			m_pSkyNode->addChild(m_pMapNode);
+ 			m_pSkyNode->attach(m_pViewer);
+ 			m_pSceneData->addChild(m_pSkyNode);
 		}
 	}
 }
@@ -66,9 +67,48 @@ osgGA::CameraManipulator* OECore::getManipulator()
 	return m_pViewer->getCameraManipulator();
 }
 
+osgEarth::Util::EarthManipulator* OECore::getEarthManipulator()
+{
+	return m_pEarthManip;
+}
+
+osgEarth::Util::SkyNode* OECore::getSky()
+{
+	return m_pSkyNode;
+}
+
+void OECore::goToPoint(osg::Vec3d& llh, float height, float heading /*= 0.0*/,
+	float pitch /*= -90.0*/, float time /*= 3.0*/)
+{
+	osgEarth::Viewpoint viewpoint;
+	viewpoint.focalPoint() = osgEarth::GeoPoint(m_pMapSRS, llh);
+	viewpoint.heading() = heading;
+	viewpoint.pitch() = pitch;
+	viewpoint.range() = height;
+	m_pEarthManip->setViewpoint(viewpoint, time);
+}
+
+void OECore::gotoWCS(osg::Vec3d& wcs, float height, float heading /*= 0.0*/,
+	float pitch /*= -90.0*/, float time /*= 3.0*/)
+{
+	osgEarth::Viewpoint viewpoint;
+	osgEarth::GeoPoint _point;
+	_point.fromWorld(m_pMapSRS, wcs);
+	viewpoint.focalPoint() = _point;
+	viewpoint.heading() = heading;
+	viewpoint.pitch() = pitch;
+	viewpoint.range() = height;
+	m_pEarthManip->setViewpoint(viewpoint, time);
+}
+
 osgEarth::Map* OECore::getMap()
 {
 	return m_pMap;
+}
+
+const osgEarth::SpatialReference* OECore::getMapSRS()
+{
+	return m_pMapSRS;
 }
 
 OECore::OECore()

@@ -23,7 +23,7 @@ public:
 	static LayerMgr* ins();
 	static void destory();
 
-	osgEarth::Layer* addLayer(Geo::Option& option, Driver driver);
+	osgEarth::Layer* addLayer(Geo::Option* option, Driver driver);
 
 	osgEarth::Layer* getLayer(std::string strID);
 

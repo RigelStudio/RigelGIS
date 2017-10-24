@@ -19,7 +19,8 @@ set(headers
 			EventAdapter.h
 			)
 
-set(sources InputLib.cpp
+set(sources
+			InputLib.cpp
 			OSGWidget.cpp
 			GraphicsView.cpp
 			EventAdapter.cpp
@@ -44,3 +45,15 @@ add_library(${TargetName} SHARED ${sources} ${Forms_Ui} ${Headers_Moc} ${Res_Qrc
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(${TargetName} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL OpenThreads.lib)
+
+INSTALL(
+    FILES       ${headers}
+    DESTINATION include/${TargetName}
+)
+
+INSTALL(
+		TARGETS ${TargetName}
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION bin
+		ARCHIVE DESTINATION lib
+	)

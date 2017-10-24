@@ -5,16 +5,11 @@ cmake_minimum_required(VERSION 2.8.12)
 project(MeGISEngine)
 
 # 配置需要的第三方库
-set(OSG_DIR "" CACHE PATH "osg directory")
-set(OSGEarth_DIR "" CACHE PATH "osgEarth directory")
+set(OSG_DIR "" CACHE PATH "osg and directory")
 
 # 如果不配置第三方库，则不进行之后的生成
 if(NOT OSG_DIR)
-	message(FATAL_ERROR "请选择osg目录!")
-endif()
-
-if(NOT OSGEarth_DIR)
-	message(FATAL_ERROR "请选择osgEarth目录!")
+	message(FATAL_ERROR "请选择osg和osgEarth的目录!")
 endif()
 
 # 判断生成的是32位还是64位
@@ -52,14 +47,12 @@ endif()
 # 设置第三方头文件与链接库的路径
 include_directories(
 	${OSG_DIR}/include
-	${OSGEarth_DIR}/include
 	${CMAKE_BINARY_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 link_directories(
 	${OSG_DIR}/lib
-	${OSGEarth_DIR}/lib
 	${OUTPUT_LIBDIR}
 )
 

@@ -8,21 +8,25 @@
 using namespace osgEarth;
 using namespace osgEarth::Features;
 
-osgEarth::ModelLayer* LayerLoader::loadShp(Geo::Option& option)
+osgEarth::ModelLayer* LayerLoader::loadShp(Geo::Option* option)
 {
-	auto theStyle = *dynamic_cast<Geo::ShpOption*>(&option);
+	auto theStyle = dynamic_cast<Geo::ShpOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
 	osgEarth::Features::Style shpStyle;
 	shpStyle.getOrCreateSymbol<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_RELATIVE_TO_TERRAIN;
 	shpStyle.getOrCreateSymbol<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_GPU;
 	auto* line = shpStyle.getOrCreateSymbol<osgEarth::Symbology::LineSymbol>();
-	line->stroke()->color() = theStyle.vColor;
-	line->stroke()->width() = theStyle.numWidth;
+	line->stroke()->color() = theStyle->vColor;
+	line->stroke()->width() = theStyle->numWidth;
 	line->tessellationSize() = 10000000.0;
 	shpStyle.getOrCreateSymbol<RenderSymbol>()->depthOffset()->enabled() = true;
 	shpStyle.getOrCreateSymbol<RenderSymbol>()->depthOffset()->automatic() = true;
 
 	osgEarth::Drivers::OGRFeatureOptions featureOptions;
-	featureOptions.url() = theStyle.strPath;
+	featureOptions.url() = theStyle->strPath;
 	featureOptions.buildSpatialIndex() = true;
 
 	osgEarth::Drivers::FeatureGeomModelOptions geomOptions;
@@ -30,55 +34,75 @@ osgEarth::ModelLayer* LayerLoader::loadShp(Geo::Option& option)
 	geomOptions.styles() = new osgEarth::Symbology::StyleSheet();
 	geomOptions.styles()->addStyle(shpStyle);
 	geomOptions.enableLighting() = false;
-	geomOptions.minRange() = theStyle.numMinRange;
-	geomOptions.maxRange() = theStyle.numMaxRange;
+	geomOptions.minRange() = theStyle->numMinRange;
+	geomOptions.maxRange() = theStyle->numMaxRange;
 
-	osgEarth::ModelLayer* modelLayer = new osgEarth::ModelLayer(theStyle.strID, geomOptions);
+	osgEarth::ModelLayer* modelLayer = new osgEarth::ModelLayer(theStyle->strID, geomOptions);
 	return modelLayer;
 }
 
-osgEarth::ImageLayer* LayerLoader::loadTMS_DOM(Geo::Option& option)
+osgEarth::ImageLayer* LayerLoader::loadTMS_DOM(Geo::Option* option)
 {
-	auto theStyle = *dynamic_cast<Geo::ImageOption*>(&option);
+	auto theStyle = dynamic_cast<Geo::ImageOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
 	osgEarth::Drivers::TMSOptions imagery;
-	imagery.url() = theStyle.strPath;
-	osgEarth::ImageLayer* layer = new osgEarth::ImageLayer(theStyle.strID, imagery);
+	imagery.url() = theStyle->strPath;
+	osgEarth::ImageLayer* layer = new osgEarth::ImageLayer(theStyle->strID, imagery);
 	return layer;
 }
 
-osgEarth::ImageLayer* LayerLoader::loadGDAL_DOM(Geo::Option& option)
+osgEarth::ImageLayer* LayerLoader::loadGDAL_DOM(Geo::Option* option)
 {
-	auto theStyle = *dynamic_cast<Geo::ImageOption*>(&option);
+	auto theStyle = dynamic_cast<Geo::ImageOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
+
 	osgEarth::Drivers::GDALOptions imagery;
-	imagery.url() = theStyle.strPath;
-	osgEarth::ImageLayer* layer = new osgEarth::ImageLayer(theStyle.strID, imagery);
+	imagery.url() = theStyle->strPath;
+	osgEarth::ImageLayer* layer = new osgEarth::ImageLayer(theStyle->strID, imagery);
 	return layer;
 }
 
-osgEarth::ElevationLayer* LayerLoader::loadTMS_DEM(Geo::Option& option)
+osgEarth::ElevationLayer* LayerLoader::loadTMS_DEM(Geo::Option* option)
 {
-	auto theStyle = *dynamic_cast<Geo::ImageOption*>(&option);
+	auto theStyle = dynamic_cast<Geo::ImageOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
 	osgEarth::Drivers::TMSOptions imagery;
-	imagery.url() = theStyle.strPath;
-	osgEarth::ElevationLayer* layer = new osgEarth::ElevationLayer(theStyle.strID, imagery);
+	imagery.url() = theStyle->strPath;
+	osgEarth::ElevationLayer* layer = new osgEarth::ElevationLayer(theStyle->strID, imagery);
 	return layer;
 }
 
-osgEarth::ElevationLayer* LayerLoader::loadGDAL_DEM(Geo::Option& option)
+osgEarth::ElevationLayer* LayerLoader::loadGDAL_DEM(Geo::Option* option)
 {
-	auto theStyle = *dynamic_cast<Geo::ImageOption*>(&option);
+	auto theStyle = dynamic_cast<Geo::ImageOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
 	osgEarth::Drivers::GDALOptions imagery;
-	imagery.url() = theStyle.strPath;
-	osgEarth::ElevationLayer* layer = new osgEarth::ElevationLayer(theStyle.strID, imagery);
+	imagery.url() = theStyle->strPath;
+	osgEarth::ElevationLayer* layer = new osgEarth::ElevationLayer(theStyle->strID, imagery);
 	return layer;
 }
 
-osgEarth::ModelLayer* LayerLoader::loadShpBuilding(Geo::Option& option)
+osgEarth::ModelLayer* LayerLoader::loadShpBuilding(Geo::Option* option)
 {
-	auto theOption = *dynamic_cast<Geo::ShpOption*>(&option);
-
+	auto theStyle = dynamic_cast<Geo::ShpOption*>(option);
+	if (nullptr == theStyle)
+	{
+		return nullptr;
+	}
 	Style buildingStyle;
-	buildingStyle.setName(theOption.strID);
+	buildingStyle.setName(theStyle->strID);
 
 	// Extrude the shapes into 3D buildings.
 	ExtrusionSymbol* extrusion = buildingStyle.getOrCreate<ExtrusionSymbol>();
@@ -119,7 +143,7 @@ osgEarth::ModelLayer* LayerLoader::loadShpBuilding(Geo::Option& option)
 	styleSheet->addStyle(roofStyle);
 
 	// load a resource library that contains the building textures.
-	ResourceLibrary* reslib = new ResourceLibrary("us_resources", theOption.strResource);
+	ResourceLibrary* reslib = new ResourceLibrary("us_resources", theStyle->strResource);
 	styleSheet->addResourceLibrary(reslib);
 	
 //  	FeatureDisplayLayout layout;
@@ -127,8 +151,8 @@ osgEarth::ModelLayer* LayerLoader::loadShpBuilding(Geo::Option& option)
 //  	layout.addLevel(FeatureLevel(0.0f, 200000.0f, theOption.strID));
 
 	osgEarth::Drivers::OGRFeatureOptions featureOptions;
-	featureOptions.name() = theOption.strID;
-	featureOptions.url() = theOption.strPath;
+	featureOptions.name() = theStyle->strID;
+	featureOptions.url() = theStyle->strPath;
 	featureOptions.buildSpatialIndex() = true;
 
 	osgEarth::Drivers::FeatureGeomModelOptions geomOptions;
@@ -136,9 +160,9 @@ osgEarth::ModelLayer* LayerLoader::loadShpBuilding(Geo::Option& option)
 	geomOptions.styles() = styleSheet;
 	geomOptions.enableLighting() = false;
 	//geomOptions.layout() = layout;
-	geomOptions.minRange() = theOption.numMinRange;
-	geomOptions.maxRange() = theOption.numMaxRange;
+	geomOptions.minRange() = theStyle->numMinRange;
+	geomOptions.maxRange() = theStyle->numMaxRange;
 
-	osgEarth::ModelLayer* modelLayer = new osgEarth::ModelLayer(theOption.strID, geomOptions);
+	osgEarth::ModelLayer* modelLayer = new osgEarth::ModelLayer(theStyle->strID, geomOptions);
 	return modelLayer;
 }

@@ -1,36 +1,31 @@
 /*************************************************
 // Copyright(C) MEEngine Team
 // File name:    InputLib.cpp
-// Author:       ï¿½ï¿½ï¿½ï¿½
+// Author:       ·ëÑÇ
 // Version:      0.1.0
 // Date:         2017-5-11
-// Description:  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// Description:  ÒÀÀµ¿â
 // History:
 *************************************************/
 #ifndef OSGGRAPHICS_INPUTLIB_H
 #define OSGGRAPHICS_INPUTLIB_H
 
 #ifdef _DEBUG
+#pragma comment(lib,"OpenThreadsd.lib")
 #pragma comment(lib,"osgd.lib")
+#pragma comment(lib,"osgDBd.lib")
 #pragma comment(lib,"osgGAd.lib")
-#pragma comment(lib,"osgUtild.lib")
-#pragma comment(lib,"osgTextd.lib")
 #pragma comment(lib,"osgViewerd.lib")
 #pragma comment(lib,"osgEarthd.lib")
 #pragma comment(lib,"osgEarthUtild.lib")
-
-#pragma comment(lib,"MeCored.lib")
-
 #else
+#pragma comment(lib,"OpenThreads.lib")
 #pragma comment(lib,"osg.lib")
+#pragma comment(lib,"osgDB.lib")
 #pragma comment(lib,"osgGA.lib")
-#pragma comment(lib,"osgUtil.lib")
-#pragma comment(lib,"osgText.lib")
 #pragma comment(lib,"osgViewer.lib")
 #pragma comment(lib,"osgEarth.lib")
 #pragma comment(lib,"osgEarthUtil.lib")
-
-#pragma comment(lib,"MeCore.lib")
 #endif
 
 #endif // OSGGRAPHICS_INPUTLIB_H

@@ -7,25 +7,29 @@
 
 namespace Geo
 {
-	struct Option
+	class Option
 	{
-		virtual void clear()
+    public:
+        Option() {}
+        virtual ~Option() {}
+
+		void clear()
 		{
 			strID = "";
 			strName = "";
 			strType = "";
 			strPath = "";
 		}
-
-	public:
+	
 		std::string strID;
 		std::string strName;
 		std::string strType;
 		std::string strPath;
 	};
 
-	struct ShpOption : public Option
+    class ShpOption : public Option
 	{
+    public:
 		float numWidth;
 		float numMinRange;
 		float numMaxRange;
@@ -33,8 +37,9 @@ namespace Geo
 		std::string strResource;
 	};
 
-	struct ImageOption : public Option
+    class ImageOption : public Option
 	{
+    public:
 
 	};
 }

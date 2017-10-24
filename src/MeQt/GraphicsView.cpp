@@ -29,7 +29,7 @@ void GraphicsView::init()
 
 	m_pViewer = new osgViewer::Viewer;
 	m_pViewer->addEventHandler(new osgViewer::StatsHandler);
-	m_pViewer->getCamera()->setNearFarRatio(0.001);
+	m_pViewer->getCamera()->setNearFarRatio(0.000001);
 	m_pViewer->getCamera()->setComputeNearFarMode(osg::CullSettings::COMPUTE_NEAR_FAR_USING_BOUNDING_VOLUMES);
 	m_pViewer->setUpViewerAsEmbeddedInWindow(0, 0, width(), height());
 	auto* manipulator = new osgGA::TrackballManipulator;
@@ -47,17 +47,28 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 
 void GraphicsView::drawBackground(QPainter *painter, const QRectF& rect)
 {
-	if (painter->paintEngine()->type() != QPaintEngine::OpenGL2)
+// 	if (painter->paintEngine()->type() != QPaintEngine::OpenGL2)
+// 	{
+// 		return;
+// 	}
+// 
+// 	// Save the painter state
+// 	painter->save();
+// 	painter->beginNativePainting();
+// 
+// 	m_pViewer->frame();
+// 
+// 	painter->endNativePainting();
+// 	painter->restore();
+	if (m_pViewer->getRunFrameScheme() == osgViewer::ViewerBase::ON_DEMAND)
 	{
-		return;
+		if (m_pViewer->checkNeedToDoFrame())
+		{
+			m_pViewer->frame();
+		}
 	}
-
-	// Save the painter state
-	painter->save();
-	painter->beginNativePainting();
-
-	m_pViewer->frame();
-
-	painter->endNativePainting();
-	painter->restore();
+	else
+	{
+		m_pViewer->frame();
+	}
 }

@@ -1,10 +1,10 @@
 /*************************************************
 // Copyright(C) MEEngine Team
 // File name:    OECore.h
-// Author:       ����
+// Author:       fengya
 // Version:      1.0
 // Date:         2017-5-11
-// Description:	OE��core�ļ�
+// Description:	 
 // History:
 *************************************************/
 #ifndef OECORE_H
@@ -27,17 +27,31 @@ public:
 	//优先级最高的初始化
 	void init(osgViewer::Viewer* viewer);
 
-	osgViewer::Viewer* getViewer();
-
 	osg::Camera* getCamera();
 
 	osg::Group* getSceneData();
+
+	osgViewer::Viewer* getViewer();
+
+	osgEarth::Map* getMap();
+
+	const osgEarth::SpatialReference* getMapSRS();
 
 	osgEarth::MapNode* getMapNode();
 
 	osgGA::CameraManipulator* getManipulator();
 
-	osgEarth::Map* getMap();
+	osgEarth::Util::EarthManipulator* getEarthManipulator();
+
+	osgEarth::Util::SkyNode* getSky();
+
+	//跳转到一个地理坐标位置
+	void goToPoint(osg::Vec3d& llh, float height, float heading = 0.0,
+		float pitch = -90.0, float time = 3.0);
+
+	//跳转到一个世界坐标位置
+	void gotoWCS(osg::Vec3d& wcs, float height, float heading = 0.0,
+		float pitch = -90.0, float time = 3.0);
 
 private:
 	OECore();
@@ -50,7 +64,9 @@ private:
 	osgViewer::Viewer*	m_pViewer;
 	osgEarth::MapNode* m_pMapNode;
 	osgEarth::Util::SkyNode* m_pSkyNode;
+	const osgEarth::SpatialReference* m_pMapSRS;
 	osgEarth::Util::EarthManipulator* m_pEarthManip;
+
 };
 
 #endif//OECORE_H

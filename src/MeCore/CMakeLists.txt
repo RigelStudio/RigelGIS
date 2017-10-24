@@ -10,11 +10,15 @@ set(headers
 			Export.h
 			OECore.h
 			FileUtils.h
+			MEMath.h
+			Segment.h
 			)
 
 set(sources InputLib.cpp
 			OECore.cpp
 			FileUtils.cpp
+			MEMath.cpp
+			Segment.cpp
 			)
 
 # add definitions,unicode and export
@@ -28,3 +32,14 @@ add_library(${TargetName} SHARED ${sources} ${headers})
 
 # .
 target_link_libraries(${TargetName} OpenThreads.lib)
+
+INSTALL(
+    FILES       ${headers}
+    DESTINATION include/${TargetName}
+)
+INSTALL(
+		TARGETS ${TargetName}
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION bin
+		ARCHIVE DESTINATION lib
+	)
