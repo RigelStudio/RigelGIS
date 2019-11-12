@@ -1,5 +1,5 @@
 # Set porject name
-set(TargetName MeCore)
+set(TargetName RigelCore)
 string(TOUPPER ${TargetName} TargetNameUP)
 
 # Find includes in corresponding build directories
@@ -27,7 +27,7 @@ add_definitions(-DUNICODE -D_UNICODE -D${TargetNameUP}_EXPORTS)
 # Set porject filiter
 source_group("Header Files" FILES ${headers})
 
-# Tell CMake to create the helloworld executable
+#
 add_library(${TargetName} SHARED ${sources} ${headers})
 
 # .

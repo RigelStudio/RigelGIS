@@ -12,7 +12,7 @@
 #include "Export.h"
 #include <string>
 
-class MECORE_EXPORT FileUtils
+class RIGELCORE_EXPORT FileUtils
 {
 public:
 	

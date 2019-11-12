@@ -17,7 +17,7 @@
 #include <osgViewer/GraphicsWindow>
 
 
-class MEQT_EXPORT EventAdapter : public QGraphicsView
+class RIGELQT_EXPORT EventAdapter : public QGraphicsView
 {
 public:
 	EventAdapter();

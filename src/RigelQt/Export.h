@@ -9,10 +9,10 @@
 #ifndef MEQT_EXPORT_H
 #define MEQT_EXPORT_H
 
-#ifdef MEQT_EXPORTS
-#	define MEQT_EXPORT __declspec(dllexport)
+#ifdef RigelQt_EXPORTS
+#	define RIGELQT_EXPORT __declspec(dllexport)
 #else
-#	define MEQT_EXPORT __declspec(dllimport)
+#	define RIGELQT_EXPORT __declspec(dllimport)
 #endif
 
 #endif // MEQT_EXPORT_H

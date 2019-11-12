@@ -18,7 +18,7 @@
 #include <osgEarthUtil/Sky>
 #include <osgEarthUtil/EarthManipulator>
 
-class MECORE_EXPORT OECore
+class RIGELCORE_EXPORT OECore
 {
 public:
 	static OECore* ins();

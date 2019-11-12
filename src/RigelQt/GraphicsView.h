@@ -12,7 +12,7 @@
 #include "EventAdapter.h"
 #include "Export.h"
 
-class MEQT_EXPORT GraphicsView : public EventAdapter
+class RIGELQT_EXPORT GraphicsView : public EventAdapter
 {
 	Q_OBJECT
 

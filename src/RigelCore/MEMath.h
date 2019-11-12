@@ -8,7 +8,7 @@
 
 static osgEarth::SpatialReference* s_SRS = osgEarth::SpatialReference::create("WGS84");
 
-class MECORE_EXPORT MEMath
+class RIGELCORE_EXPORT MEMath
 {
 	//定义类型: 线段
 public:

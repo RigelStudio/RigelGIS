@@ -11,7 +11,7 @@
 #应用
 #add_subdirectory(Application)
 
-add_subdirectory(MeQt)
-add_subdirectory(MeDB)
-add_subdirectory(MeCore)
-add_subdirectory(GUITool)
+add_subdirectory(RigelCore)
+add_subdirectory(RigelQt)
+#add_subdirectory(RigelDB)
+#add_subdirectory(RigelGUI)

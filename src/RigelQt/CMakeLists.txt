@@ -1,5 +1,5 @@
 # Set porject name
-set(TargetName MeQt)
+set(TargetName RigelQt)
 string(TOUPPER ${TargetName} TargetNameUP)
 
 # Find includes in corresponding build directories

@@ -16,7 +16,7 @@
 #include <QGLWidget>
 #include <osgViewer/Viewer>
 
-class MEQT_EXPORT OSGWidget : public QGLWidget
+class RIGELQT_EXPORT OSGWidget : public QGLWidget
 {
 public:
 	OSGWidget(QWidget* parent = nullptr);
