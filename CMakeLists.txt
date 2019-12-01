@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 # 设置解决方案名称
-project(MeGISEngine)
+project(RigelGIS)
 
 # 配置需要的第三方库
 set(OSG_DIR "" CACHE PATH "osg and directory")

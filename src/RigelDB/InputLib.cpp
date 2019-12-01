@@ -18,7 +18,7 @@
 #pragma comment(lib,"osgEarthSymbologyd.lib")
 #pragma comment(lib,"osgEarthFeatures.lib")
 
-#pragma comment(lib,"MeCored.lib")
+#pragma comment(lib,"RigelCored.lib")
 
 #else
 #pragma comment(lib,"osg.lib")
@@ -28,7 +28,7 @@
 #pragma comment(lib,"osgEarthSymbology.lib")
 #pragma comment(lib,"osgEarthFeatures.lib")
 
-#pragma comment(lib,"MeCore.lib")
+#pragma comment(lib,"RigelCore.lib")
 #endif
 
 #endif // OSGGRAPHICS_INPUTLIB_H

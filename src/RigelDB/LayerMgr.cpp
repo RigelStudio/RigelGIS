@@ -1,5 +1,5 @@
 #include "LayerMgr.h"
-#include "MeCore/OECore.h"
+#include "RigelCore/OECore.h"
 #include "LayerLoader.h"
 
 LayerMgr* LayerMgr::s_pSelf = nullptr;

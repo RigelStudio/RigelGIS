@@ -13,5 +13,6 @@
 
 add_subdirectory(RigelCore)
 add_subdirectory(RigelQt)
-#add_subdirectory(RigelDB)
+add_subdirectory(RigelModel)
+add_subdirectory(RigelDB)
 #add_subdirectory(RigelGUI)

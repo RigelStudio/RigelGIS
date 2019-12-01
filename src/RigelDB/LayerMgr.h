@@ -5,7 +5,7 @@
 #include <map>
 #include <osgEarth/Layer>
 
-class MEDB_EXPORT LayerMgr
+class RIGELDB_EXPORT LayerMgr
 {
 
 	typedef std::map<std::string, osgEarth::Layer*> LayerList;

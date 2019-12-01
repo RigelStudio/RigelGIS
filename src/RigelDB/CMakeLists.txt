@@ -1,5 +1,5 @@
 # Set porject name
-set(TargetName MeDB)
+set(TargetName RigelDB)
 string(TOUPPER ${TargetName} TargetNameUP)
 
 # Find includes in corresponding build directories
