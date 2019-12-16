@@ -26,7 +26,7 @@ static int s_logLevel = AllLevel;
 static LogMode s_logMode = AllMode;
 //static std::mutex s_mutex;
 
-class BIMBASE_EXPORT LogMessage
+class RIGELCORE_EXPORT LogMessage
 {
 public:
 	LogMessage(char* file, int line, LogLevel level);
@@ -47,7 +47,7 @@ private:
 	std::stringstream* m_msgTemp;
 };
 
-class BIMBASE_EXPORT Loger
+class RIGELCORE_EXPORT Loger
 {
 public:
 	static void initLog(const std::string& logDir);

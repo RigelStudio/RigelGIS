@@ -6,6 +6,9 @@ string(TOUPPER ${TargetName} TargetNameUP)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Core)
+find_package(Qt5Network)
+find_package(Qt5GUI)
+find_package(Qt5Widgets)
 
 # Find all Files
 set(headers
@@ -13,12 +16,15 @@ set(headers
 			OECore.h
 			FileUtils.h
 			MEMath.h
+			Log.h
+			HttpRequest.h
 			)
 
 set(sources InputLib.cpp
 			OECore.cpp
 			FileUtils.cpp
 			MEMath.cpp
+			HttpRequest.cpp
 			)
 
 # add definitions,unicode and export
@@ -29,9 +35,8 @@ source_group("Header Files" FILES ${headers})
 
 #
 add_library(${TargetName} SHARED ${sources} ${headers})
-
 # .
-target_link_libraries(${TargetName} OpenThreads.lib)
+target_link_libraries(${TargetName} Qt5::Core Qt5::Gui Qt5::Widgets  Qt5::Network OpenThreads.lib)
 
 INSTALL(
     FILES       ${headers}

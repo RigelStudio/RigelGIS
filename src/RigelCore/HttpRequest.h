@@ -9,7 +9,7 @@
 class QTimer;
 class QNetworkAccessManager;
 
-class BIMCORE_EXPORT HttpRequest : public QObject
+class RIGELCORE_EXPORT HttpRequest : public QObject
 {
 	enum RequestType
 	{

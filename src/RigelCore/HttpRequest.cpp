@@ -1,5 +1,4 @@
 #include "HttpRequest.h"
-#include "Global.h"
 #include <QFile>
 #include <QTimer>
 #include <QEventLoop>
@@ -33,12 +32,9 @@ QJsonObject HttpRequest::Request(QJsonObject input, RequestType methodtype, QStr
 QJsonObject HttpRequest::HttpGet(QString url)
 {
 	init();
-	QString strToken = Core->UserToken;
 	QNetworkRequest request;
 	request.setUrl(QUrl(url));
 	request.setRawHeader("Content-Type", "application/json");
-	request.setRawHeader("Authorization", strToken.toLocal8Bit());
-	request.setRawHeader("endpoint", "PC");
 	QNetworkReply* reply = m_pNetManager->get(request);
 
 	//timerÓÃÀ´ÅÐ¶Ï³¬Ê±£¬EventLoopÓÃÀ´µÈ´ýÏìÓ¦
@@ -63,7 +59,7 @@ QJsonObject HttpRequest::HttpGet(QString url)
 		{
 			//ÇëÇó´íÎó
 			QString strMsg = QString::number(code) + ": " + jsonData.value("message").toString();
-			throw BIMException(strMsg);
+			//throw BIMException(strMsg);
 		}
 	}
 	else
@@ -73,7 +69,7 @@ QJsonObject HttpRequest::HttpGet(QString url)
 		disconnect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 		reply->abort();
 		reply->deleteLater();
-		throw BIMException(QStringLiteral("ÍøÂç³¬Ê±£¡"));
+		//throw BIMException(QStringLiteral("ÍøÂç³¬Ê±£¡"));
 	}
 	return QJsonObject();
 }
@@ -82,12 +78,9 @@ QJsonObject HttpRequest::HttpPost(QJsonObject input, QString url)
 {
 	init();
 
-	QString strToken = Core->UserToken;
 	QNetworkRequest request;
 	request.setUrl(QUrl(url));
 	request.setRawHeader("Content-Type", "application/json");
-	request.setRawHeader("Authorization", strToken.toLocal8Bit());
-	request.setRawHeader("endpoint", "PC");
 
 	QJsonDocument inputDoc = QJsonDocument(input);
 	QString str = QString(inputDoc.toJson());
@@ -106,7 +99,7 @@ QJsonObject HttpRequest::HttpPost(QJsonObject input, QString url)
 		if (reply->error() != QNetworkReply::NoError)
 		{
 			//ÇëÇó´íÎó
-			throw BIMException(reply->errorString());
+			//throw QException(reply->errorString().toStdString());
 		}
 		else
 		{
@@ -131,12 +124,9 @@ QJsonObject HttpRequest::HttpPost(QJsonObject input, QString url)
 QString HttpRequest::httpDownload(QString url, QString strFileDir)
 {
 	init();
-	QString strToken = Core->UserToken;
 	QNetworkRequest request;
 	request.setUrl(QUrl(url));
 	request.setRawHeader("Content-Type", "application/octet-stream");
-	request.setRawHeader("Authorization", strToken.toLocal8Bit());
-	request.setRawHeader("endpoint", "PC");
 	QNetworkReply* reply = m_pNetManager->get(request);
 
 	//timerÓÃÀ´ÅÐ¶Ï³¬Ê±£¬EventLoopÓÃÀ´µÈ´ýÏìÓ¦
@@ -183,7 +173,7 @@ QString HttpRequest::httpDownload(QString url, QString strFileDir)
 		disconnect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 		reply->abort();
 		reply->deleteLater();
-		throw BIMException(QStringLiteral("ÍøÂç³¬Ê±£¡"));
+		//throw BIMException(QStringLiteral("ÍøÂç³¬Ê±£¡"));
 	}
 	return "";
 }
